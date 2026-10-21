@@ -1,0 +1,11 @@
+[target.x86_64-pc-windows-gnu]
+rustflags = [
+    "-L", "native=C:/msys64/mingw64/lib",
+    "-l", "xml2",
+    "-l", "iconv",
+    "-l", "b2",
+    "-l", "expat",
+]
+
+[build]
+target = "x86_64-pc-windows-gnu"
