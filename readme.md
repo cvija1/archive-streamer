@@ -4,6 +4,10 @@
 
 Archive Streamer is a Windows application designed to extract large archives when available disk space is limited. It provides both a command-line interface (CLI) and a graphical user interface (GUI).
 
+<p align="center">
+  <img src="screenshots/archive-streamer-gui.png" alt="Archive Streamer GUI" width="800">
+</p>
+
 Instead of relying on a conventional extraction workflow that keeps the entire source archive intact until extraction finishes, Archive Streamer uses a streaming approach and can reclaim storage occupied by already-consumed portions of the source archive on supported filesystems.
 
 > **Important:** Archive Streamer is destructive by design. The source archive may be modified during extraction, and the original archive is deleted after successful extraction. Always keep a backup if you need to preserve the original.
