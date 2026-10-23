@@ -45,7 +45,7 @@ jobs:
 
       - name: Find CLI binary
         run: |
-          CLI="$(find package -type f -name 'archive-streamer-cli' -print -quit)"
+          CLI="$(find "$GITHUB_WORKSPACE/package" -type f -name 'archive-streamer-cli' -print -quit)"
           test -n "$CLI"
           chmod +x "$CLI"
           echo "CLI_PATH=$CLI" >> "$GITHUB_ENV"
