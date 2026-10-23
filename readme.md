@@ -47,6 +47,24 @@ Filesystem-specific space reclamation is platform-dependent. Verify support and 
 
 Download the appropriate installer from the project's **[GitHub Releases](https://github.com/cvija1/archive-streamer/releases)** page and follow the installation instructions.
 
+### CLI
+
+Run the CLI installer and optionally select **Add Archive Streamer CLI to PATH**.
+
+After installation, open a new CMD or PowerShell window.
+
+Check that the command is available:
+
+```powershell
+archive-streamer-cli.exe
+```
+
+### GUI
+
+Run the GUI installer and launch **Archive Streamer** from the Start Menu or Desktop shortcut.
+
+Select the source archive, choose the destination folder, and start extraction.
+
 ### macOS
 
 Archive Streamer requires [Homebrew](https://brew.sh/) and several native libraries.
@@ -85,25 +103,6 @@ Alternatively, launch `archive-streamer-gui` from Terminal:
 ```bash
 ./archive-streamer-gui
 ```
-
-
-### CLI
-
-Run the CLI installer and optionally select **Add Archive Streamer CLI to PATH**.
-
-After installation, open a new CMD or PowerShell window.
-
-Check that the command is available:
-
-```powershell
-archive-streamer-cli.exe
-```
-
-### GUI
-
-Run the GUI installer and launch **Archive Streamer** from the Start Menu or Desktop shortcut.
-
-Select the source archive, choose the destination folder, and start extraction.
 
 ## CLI Usage
 
