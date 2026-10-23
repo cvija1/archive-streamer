@@ -25,7 +25,6 @@ jobs:
             cmake \
             pkg-config \
             libxml2-dev \
-            libb2-dev \
             libbz2-dev \
             zlib1g-dev \
             liblzma-dev \
@@ -34,6 +33,9 @@ jobs:
             libssl-dev \
             libacl1-dev \
             libattr1-dev
+
+      - name: Clean build
+        run: cargo clean
 
       - name: Build CLI
         run: cargo build --release --bin archive-streamer-cli
