@@ -1,3 +1,14 @@
+name: Build linux binary
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+  
   build-linux:
     name: Build Linux (Ubuntu x86_64)
     runs-on: ubuntu-22.04
