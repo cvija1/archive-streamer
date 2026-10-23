@@ -6,6 +6,3 @@ rustflags = [
     "-l", "b2",
     "-l", "expat",
 ]
-
-[build]
-target = "x86_64-pc-windows-gnu"
