@@ -2,7 +2,7 @@
 
 **Extract large archives with less temporary disk space.**
 
-Archive Streamer is a Windows application designed to extract large archives when available disk space is limited. It provides both a command-line interface (CLI) and a graphical user interface (GUI).
+Archive Streamer is a multi-platform application designed to extract large archives when available disk space is limited. It provides both a command-line interface (CLI) and a graphical user interface (GUI).
 
 <p align="center">
   <img src="screenshots/archive-streamer-gui.png" alt="Archive Streamer GUI" width="800">
@@ -16,7 +16,7 @@ Instead of relying on a conventional extraction workflow that keeps the entire s
 
 - **Streaming extraction** — processes archive data incrementally.
 - **Reduced temporary disk-space requirements** — can reclaim space from the source archive as data is consumed, where supported.
-- **CLI support** — run extraction from CMD, PowerShell, or scripts.
+- **CLI support** — run extractions from the command line on Windows, Linux, and macOS, or automate them with scripts.
 - **GUI support** — select an archive and destination using a graphical interface.
 - **Progress and status reporting** — view extraction activity and errors.
 - **Windows installers** — install the CLI and GUI separately.
