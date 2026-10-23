@@ -18,15 +18,13 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
 
       - name: Install native dependencies
-        run: |
-          brew install bzip2 libxml2 libiconv \
-            libb2 zlib xz zstd lz4
+        run: brew install libiconv libxml2 libb2 bzip2 zlib xz zstd lz4
 
-      - name: Configure library paths
+      - name: Configure native libraries
         run: |
-          echo "PKG_CONFIG_PATH=$(brew --prefix libxml2)/lib/pkgconfig:$(brew --prefix libb2)/lib/pkgconfig" >> "$GITHUB_ENV"
-          echo "LIBRARY_PATH=$(brew --prefix libb2)/lib:$(brew --prefix bzip2)/lib:$(brew --prefix libxml2)/lib:$(brew --prefix libiconv)/lib:$(brew --prefix zlib)/lib:$(brew --prefix xz)/lib:$(brew --prefix zstd)/lib:$(brew --prefix lz4)/lib" >> "$GITHUB_ENV"
-      
+          echo "LIBRARY_PATH=$(brew --prefix libiconv)/lib:$(brew --prefix libxml2)/lib:$(brew --prefix libb2)/lib:$(brew --prefix bzip2)/lib:$(brew --prefix zlib)/lib:$(brew --prefix xz)/lib:$(brew --prefix zstd)/lib:$(brew --prefix lz4)/lib" >> "$GITHUB_ENV"
+          echo "PKG_CONFIG_PATH=$(brew --prefix libiconv)/lib/pkgconfig:$(brew --prefix libxml2)/lib/pkgconfig" >> "$GITHUB_ENV"
+
       - name: Build CLI
         run: cargo build --release --bin archive-streamer-cli
 
