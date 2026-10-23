@@ -33,8 +33,9 @@ The amount of space recovered depends on the archive format, compression method,
 
 ## Supported Platforms
 
-- Windows — GUI and CLI installers.
-- Linux — CLI builds may be possible, depending on platform-specific implementation and dependencies.
+- Windows — GUI and CLI installers (tested on win11 x64, per documentation support for NTFS, ReFS, SMB 3.0, CsvFS).
+- Linux — Tested on Ubuntu 24.04 and ext4 fs (per documentation support for XFS (since Linux 2.6.38), ext4 (since Linux 3.0), Btrfs (since Linux 3.7), tmpfs(5) (since Linux 3.5), gfs2(5) (since Linux 4.16))
+- macOS — Tested on macOS 26 and APFS
 
 Filesystem-specific space reclamation is platform-dependent. Verify support and test with disposable archives before relying on it for important data.
 
