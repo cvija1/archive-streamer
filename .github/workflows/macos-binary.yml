@@ -1,0 +1,66 @@
+
+name: Build macOS
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    name: Build macOS (${{ matrix.arch }})
+    runs-on: ${{ matrix.runner }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: arm64
+            runner: macos-15
+            deployment_target: "11.0"
+            artifact: archive-streamer-macos-arm64
+
+          - arch: x86_64
+            runner: macos-15-intel
+            deployment_target: "11.0"
+            artifact: archive-streamer-macos-x86_64
+
+    env:
+      MACOSX_DEPLOYMENT_TARGET: ${{ matrix.deployment_target }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install native dependencies
+        run: brew install libxml2 libb2 bzip2 zlib xz zstd lz4
+
+      - name: Configure native libraries
+        run: |
+          echo "LIBRARY_PATH=$(brew --prefix libb2)/lib:$(brew --prefix bzip2)/lib:$(brew --prefix libxml2)/lib:$(brew --prefix zlib)/lib:$(brew --prefix xz)/lib:$(brew --prefix zstd)/lib:$(brew --prefix lz4)/lib" >> "$GITHUB_ENV"
+          echo "PKG_CONFIG_PATH=$(brew --prefix libxml2)/lib/pkgconfig:$(brew --prefix libb2)/lib/pkgconfig" >> "$GITHUB_ENV"
+
+      - name: Build CLI
+        run: cargo build --release --bin archive-streamer-cli
+
+      - name: Build GUI
+        run: cargo build --release --features gui --bin archive-streamer-gui
+
+      - name: Check binary architecture
+        run: |
+          file target/release/archive-streamer-cli
+          file target/release/archive-streamer-gui
+
+      - name: Upload macOS binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: |
+            target/release/archive-streamer-cli
+            target/release/archive-streamer-gui
+          if-no-files-found: error
+          retention-days: 30
