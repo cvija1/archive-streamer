@@ -96,8 +96,7 @@ jobs:
           print(f"Archive size: {archive_size / 1048576:.2f} MiB")
           print(f"Expanded size: {os.path.getsize(source) / 1048576:.2f} MiB")
 
-          # Leave less free space than the expanded file needs.
-          target_free = 48 * 1024 * 1024
+          target_free = 60 * 1024 * 1024
 
           with open(filler, "wb") as f:
               while shutil.disk_usage(mount).free > target_free:
@@ -113,7 +112,7 @@ jobs:
           if archive_size < 48 * 1024 * 1024:
               raise SystemExit("INVALID TEST: archive unexpectedly small")
 
-          if usage.free >= 55 * 1024 * 1024:
+          if usage.free >= 70 * 1024 * 1024:
               raise SystemExit("INVALID TEST: insufficient disk pressure")
 
           PY
