@@ -6,6 +6,7 @@ use std::path::{Component, PathBuf};
 use std::sync::mpsc::Sender;
 
 #[cfg(target_os = "linux")]
+// XFS (since Linux 2.6.38), ext4 (since Linux 3.0), Btrfs (since Linux 3.7), tmpfs(5) (since Linux 3.5), gfs2(5) (since Linux 4.16) supported fs from linux documentation
 fn punch_hole(file: &File, offset: u64, length: u64) -> io::Result<()> {
     use nix::fcntl::{FallocateFlags, fallocate};
     use std::os::unix::io::AsRawFd;
@@ -15,38 +16,47 @@ fn punch_hole(file: &File, offset: u64, length: u64) -> io::Result<()> {
     fallocate(fd, flags, offset as i64, length as i64)
         .map_err(|e| io::Error::new(io::ErrorKind::Other, e.to_string()))
 }
-
+// APFS concluded on the basis of some github projects
 #[cfg(target_os = "macos")]
 fn punch_hole(file: &File, offset: u64, length: u64) -> io::Result<()> {
     use libc;
     use std::os::unix::io::AsRawFd;
 
     #[repr(C)]
-    struct fstore_t {
-        fst_flags: u32,
-        fst_posmode: i32,
-        fst_offset: i64,
-        fst_length: i64,
-        fst_bytesalloc: i64,
+    struct FPunchHole {
+        fp_flags: u32,
+        reserved: u32,
+        fp_offset: i64,
+        fp_length: i64,
     }
 
-    let mut store = fstore_t {
-        fst_flags: 0,
-        fst_posmode: 1, // F_PEOFPOSMODE
-        fst_offset: offset as i64,
-        fst_length: length as i64,
-        fst_bytesalloc: 0,
+    if length == 0 {
+        return Ok(());
+    }
+
+    let offset = i64::try_from(offset)
+        .map_err(|_| io::Error::new(io::ErrorKind::InvalidInput, "offset exceeds i64::MAX"))?;
+
+    let length = i64::try_from(length)
+        .map_err(|_| io::Error::new(io::ErrorKind::InvalidInput, "length exceeds i64::MAX"))?;
+
+    let mut hole = FPunchHole {
+        fp_flags: 0,
+        reserved: 0,
+        fp_offset: offset,
+        fp_length: length,
     };
 
-    // F_PUNCHHOLE = 63
-    let r = unsafe { libc::fcntl(file.as_raw_fd(), 63, &mut store) };
-    if r < 0 {
+    let result = unsafe { libc::fcntl(file.as_raw_fd(), 99, &mut hole) };
+
+    if result == -1 {
         Err(io::Error::last_os_error())
     } else {
         Ok(())
     }
 }
 
+//NTFS, ReFS, SMB 3.0, CsvFS per windows documentation
 #[cfg(target_os = "windows")]
 fn punch_hole(file: &File, offset: u64, length: u64) -> io::Result<()> {
     use std::ffi::c_void;
