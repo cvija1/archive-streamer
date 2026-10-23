@@ -1,0 +1,49 @@
+  build-linux:
+    name: Build Linux (Ubuntu x86_64)
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install native dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            cmake \
+            pkg-config \
+            libxml2-dev \
+            libbz2-dev \
+            zlib1g-dev \
+            liblzma-dev \
+            libzstd-dev \
+            liblz4-dev \
+            libssl-dev \
+            libacl1-dev \
+            libattr1-dev
+
+      - name: Build CLI
+        run: cargo build --release --bin archive-streamer-cli
+
+      - name: Check binary
+        run: |
+          file target/release/archive-streamer-cli
+          ldd target/release/archive-streamer-cli
+
+      - name: Package
+        run: |
+          mkdir -p dist
+          cp target/release/archive-streamer-cli dist/
+          tar -czf archive-streamer-ubuntu-x86_64.tar.gz -C dist .
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: archive-streamer-ubuntu-x86_64
+          path: archive-streamer-ubuntu-x86_64.tar.gz
+          if-no-files-found: error
+          retention-days: 30

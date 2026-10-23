@@ -41,39 +41,36 @@ Filesystem-specific space reclamation is platform-dependent. Verify support and 
 
 ## Installation
 
-## Installation
-
 ### Windows (x64)
 
-Download the appropriate installer from the project's **[GitHub Releases](https://github.com/cvija1/archive-streamer/releases)** page and follow the installation instructions.
+Download the appropriate installer from the project's [**GitHub Releases**](https://github.com/cvija1/archive-streamer/releases) page and follow the installation instructions.
 
-### CLI
+#### CLI
 
-Run the CLI installer and optionally select **Add Archive Streamer CLI to PATH**.
+1. Run the CLI installer.
+2. Optionally select **Add Archive Streamer CLI to PATH** during installation.
+3. Open a new CMD or PowerShell window.
+4. Verify that the CLI is available:
 
-After installation, open a new CMD or PowerShell window.
+   ```powershell
+   archive-streamer-cli.exe
+   ```
 
-Check that the command is available:
+#### GUI
 
-```powershell
-archive-streamer-cli.exe
-```
-
-### GUI
-
-Run the GUI installer and launch **Archive Streamer** from the Start Menu or Desktop shortcut.
-
-Select the source archive, choose the destination folder, and start extraction.
+1. Run the GUI installer.
+2. Launch **Archive Streamer** from the Start Menu or Desktop shortcut.
+3. Select the source archive and destination folder, then start extraction.
 
 ### macOS
 
 Archive Streamer requires [Homebrew](https://brew.sh/) and several native libraries.
 
-**1. Install Homebrew**
+#### 1. Install Homebrew
 
 If Homebrew is not already installed, follow the instructions at [brew.sh](https://brew.sh/).
 
-**2. Install dependencies**
+#### 2. Install dependencies
 
 Open Terminal and run:
 
@@ -81,16 +78,16 @@ Open Terminal and run:
 brew install libxml2 libb2 bzip2 zlib xz zstd lz4
 ```
 
-**3. Download Archive Streamer**
+#### 3. Download Archive Streamer
 
-Download the ZIP matching your Mac's processor from [GitHub Releases](https://github.com/cvija1/archive-streamer/releases):
+Download the ZIP matching your Mac's processor from [**GitHub Releases**](https://github.com/cvija1/archive-streamer/releases):
 
 - **Apple Silicon** (M1, M2, M3, M4 and newer): `archive-streamer-macos-arm64.zip`
-- **Intel:** `archive-streamer-macos-x86_64.zip`
+- **Intel Mac:** `archive-streamer-macos-x86_64.zip`
 
 Extract the downloaded ZIP file.
 
-**4. Run Archive Streamer**
+#### 4. Run Archive Streamer
 
 Open Terminal, navigate to the extracted folder, and run the CLI:
 
@@ -98,10 +95,44 @@ Open Terminal, navigate to the extracted folder, and run the CLI:
 ./archive-streamer-cli
 ```
 
-Alternatively, launch `archive-streamer-gui` from Terminal:
+To launch the GUI instead, run:
 
 ```bash
 ./archive-streamer-gui
+```
+
+### Linux (Ubuntu x86-64)
+
+Archive Streamer CLI is built for Ubuntu x86-64. Required native libraries must be installed on the system.
+
+#### 1. Install dependencies
+
+Open Terminal and run:
+
+```bash
+sudo apt update
+sudo apt install -y libxml2 libb2-1 libbz2-1.0 zlib1g liblzma5 libzstd1 liblz4-1
+```
+
+#### 2. Download Archive Streamer
+
+Download `archive-streamer-ubuntu-x86_64.tar.gz` from the project's [**GitHub Releases**](https://github.com/cvija1/archive-streamer/releases) page.
+
+#### 3. Extract the package
+
+Navigate to the directory containing the downloaded archive and run:
+
+```bash
+tar -xzf archive-streamer-ubuntu-x86_64.tar.gz
+chmod +x archive-streamer-cli
+```
+
+#### 4. Run Archive Streamer
+
+Run the CLI from Terminal:
+
+```bash
+./archive-streamer-cli
 ```
 
 ## CLI Usage
