@@ -41,7 +41,51 @@ Filesystem-specific space reclamation is platform-dependent. Verify support and 
 
 ## Installation
 
-Download the appropriate installer from the project's **GitHub Releases** page.
+## Installation
+
+### Windows (x64)
+
+Download the appropriate installer from the project's **[GitHub Releases](https://github.com/cvija1/archive-streamer/releases)** page and follow the installation instructions.
+
+### macOS
+
+Archive Streamer requires [Homebrew](https://brew.sh/) and several native libraries.
+
+**1. Install Homebrew**
+
+If Homebrew is not already installed, follow the instructions at [brew.sh](https://brew.sh/).
+
+**2. Install dependencies**
+
+Open Terminal and run:
+
+```bash
+brew install libxml2 libb2 bzip2 zlib xz zstd lz4
+```
+
+**3. Download Archive Streamer**
+
+Download the ZIP matching your Mac's processor from [GitHub Releases](https://github.com/cvija1/archive-streamer/releases):
+
+- **Apple Silicon** (M1, M2, M3, M4 and newer): `archive-streamer-macos-arm64.zip`
+- **Intel:** `archive-streamer-macos-x86_64.zip`
+
+Extract the downloaded ZIP file.
+
+**4. Run Archive Streamer**
+
+Open Terminal, navigate to the extracted folder, and run the CLI:
+
+```bash
+./archive-streamer-cli
+```
+
+Alternatively, launch `archive-streamer-gui` from Terminal:
+
+```bash
+./archive-streamer-gui
+```
+
 
 ### CLI
 
